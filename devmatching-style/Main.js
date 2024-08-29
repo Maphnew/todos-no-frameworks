@@ -1,13 +1,17 @@
-export default function Main({ $target, initialState, onAdd }) {
+export default function Main({ $target, initialState, onAdd, onDelete }) {
     this.$element = document.createElement("section")
     this.$element.className = "main"
     this.state = initialState
+    $target.appendChild(this.$element)
 
     this.setState = (nextState) => {
+        this.state = {
+            ...this.state,
+            ...nextState
+        }
 
+        this.render()
     }
-
-    $target.appendChild(this.$element)
 
     this.render = () => {
         this.$element.innerHTML = `
@@ -15,6 +19,19 @@ export default function Main({ $target, initialState, onAdd }) {
             <label for="toggle-all">
                 Mark all as complete
             </label>
+            <ul class="todo-list">
+                ${this.state.todolist.map((todo, i) => {
+                    return `
+                        <li data-id=${i}>
+                            <div class="view">
+                                <input class="toggle" type="checkbox">
+                                <label>${todo.text}</label>
+                                <button class="destroy"></button>
+                            </div>
+                        </li>
+                    `
+                }).join('')}
+            </ul>
         `
     }
 
@@ -22,16 +39,17 @@ export default function Main({ $target, initialState, onAdd }) {
 
     window.addEventListener('keyup', (e) => {
         if(e.key === 'Enter') {
-            console.log('Enter')
-            const todolist = this.state.todolist
-            this.setState({
-                ...this.state,
-                todolist: todolist.concat[document.querySelector('.new-todo').value]
-            })
             onAdd({
-                name: document.querySelector('.new-todo').value,
+                text: document.querySelector('.new-todo').value,
                 completed: false
             })
+        }
+    })
+
+    this.$element.addEventListener('click', (e) => {
+        const $button = e.target.closest("button")
+        if($button && $button.className === 'destroy') {
+            onDelete($button.previousElementSibling.textContent)
         }
     })
 }
