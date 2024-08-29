@@ -24,7 +24,7 @@ export default function Main({ $target, initialState, onAdd, onDelete, onCheck }
                     return `
                         <li data-id=${i} class="${todo.completed ? 'completed': ''}">
                             <div class="view">
-                                <input class="toggle" type="checkbox">
+                                <input class="toggle" type="checkbox" ${todo.completed ? 'checked' : ''}>
                                 <label>${todo.text}</label>
                                 <button class="destroy"></button>
                             </div>
