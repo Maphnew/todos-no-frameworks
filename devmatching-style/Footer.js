@@ -49,5 +49,14 @@ export default function Footer({ $target, initialState, onClear }) {
         if($button && $button.className === 'clear-completed') {
             onClear()
         }
+        const $a = e.target.closest('a')
+        if($a) {
+            if( $a.className === 'selected' ) {
+                $a.classList.remove("selected")
+            }else{
+                $a.closest('ul').querySelectorAll('a').forEach(a => a.classList.remove('selected'))
+                $a.classList.add("selected")
+            }
+        }
     })
 }
