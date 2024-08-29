@@ -49,6 +49,9 @@ export default function App({ $target }) {
 
     const footer = new Footer({
         $target,
-        initialState: this.state
+        initialState: this.state,
+        onClear: () => {
+            this.setState({todolist: []})
+        }
     })
 }

@@ -1,4 +1,4 @@
-export default function Footer({ $target, initialState }) {
+export default function Footer({ $target, initialState, onClear }) {
     this.$element = document.createElement("footer")
     this.$element.className = "footer"
     this.state = initialState
@@ -43,4 +43,11 @@ export default function Footer({ $target, initialState }) {
         `
     }
     this.render()
+
+    this.$element.addEventListener('click', (e) => {
+        const $button = e.target.closest('button')
+        if($button && $button.className === 'clear-completed') {
+            onClear()
+        }
+    })
 }
