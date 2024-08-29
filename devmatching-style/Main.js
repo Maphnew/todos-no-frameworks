@@ -1,4 +1,4 @@
-export default function Main({ $target, initialState, onAdd, onDelete }) {
+export default function Main({ $target, initialState, onAdd, onDelete, onCheck }) {
     this.$element = document.createElement("section")
     this.$element.className = "main"
     this.state = initialState
@@ -22,7 +22,7 @@ export default function Main({ $target, initialState, onAdd, onDelete }) {
             <ul class="todo-list">
                 ${this.state.todolist.map((todo, i) => {
                     return `
-                        <li data-id=${i}>
+                        <li data-id=${i} class="${todo.completed ? 'completed': ''}">
                             <div class="view">
                                 <input class="toggle" type="checkbox">
                                 <label>${todo.text}</label>
@@ -50,6 +50,10 @@ export default function Main({ $target, initialState, onAdd, onDelete }) {
         const $button = e.target.closest("button")
         if($button && $button.className === 'destroy') {
             onDelete($button.previousElementSibling.textContent)
+        }
+        const $checkbox = e.target.closest("input[type=checkbox]")
+        if($checkbox && $checkbox.className === 'toggle') {
+            onCheck($checkbox.nextElementSibling.textContent)
         }
     })
 }

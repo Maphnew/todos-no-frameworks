@@ -32,6 +32,18 @@ export default function App({ $target }) {
                 ...this.state,
                 todolist
             })
+        },
+        onCheck: (text) => {
+            const todolist = this.state.todolist.map(todo => {
+                if(todo.text === text) {
+                    todo.completed = !todo.completed
+                }
+                return todo
+            })
+            this.setState({
+                ...this.state,
+                todolist
+            })
         }
     })
 
