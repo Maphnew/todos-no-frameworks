@@ -43,6 +43,7 @@ export default function Main({ $target, initialState, onAdd, onDelete, onCheck }
                 text: document.querySelector('.new-todo').value,
                 completed: false
             })
+            document.querySelector('.new-todo').value = ''
         }
     })
 
