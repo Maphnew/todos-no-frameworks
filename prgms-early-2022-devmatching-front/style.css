@@ -1,0 +1,16 @@
+.Suggestion {
+  background-color: antiquewhite;
+  padding: 3px 0;
+}
+.Suggestion ul {
+  padding: 0;
+}
+.Suggestion li {
+  list-style: none;
+  padding: 5px;
+}
+
+.Suggestion__item--selected {
+  background-color: brown;
+  color: white;
+}
