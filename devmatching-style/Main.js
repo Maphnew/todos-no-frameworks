@@ -43,19 +43,6 @@ export default function Main({ $target, initialState, onAdd, onDelete, onCheck, 
 
     this.render()
 
-    window.addEventListener('keyup', (e) => {
-        if(e.key === 'Enter') {
-            if(document.querySelector('.new-todo').value === '') {
-                return
-            }
-            onAdd({
-                text: document.querySelector('.new-todo').value,
-                completed: false
-            })
-            document.querySelector('.new-todo').value = ''
-        }
-    })
-
     this.$element.addEventListener('click', (e) => {
         const $button = e.target.closest("button")
         if($button && $button.className === 'destroy') {

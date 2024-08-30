@@ -1,4 +1,4 @@
-export default function Header({ $target }) {
+export default function Header({ $target, onAdd }) {
     this.$element = document.createElement('header')
     this.$element.className = 'header'
 
@@ -12,4 +12,17 @@ export default function Header({ $target }) {
     }
 
     this.render()
+
+    window.addEventListener('keyup', (e) => {
+        if(e.key === 'Enter') {
+            if(document.querySelector('.new-todo').value === '') {
+                return
+            }
+            onAdd({
+                text: document.querySelector('.new-todo').value,
+                completed: false
+            })
+            document.querySelector('.new-todo').value = ''
+        }
+    })
 }

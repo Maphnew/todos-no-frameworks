@@ -16,17 +16,17 @@ export default function App({ $target }) {
     }
 
     const header = new Header({
-        $target
-    })
-
-    const main = new Main({
-        $target, initialState: this.state,
+        $target,
         onAdd: (todo) => {
             this.setState({
                 ...this.state,
                 todolist: [...this.state.todolist, todo]
             })
-        },
+        }
+    })
+
+    const main = new Main({
+        $target, initialState: this.state,
         onDelete: (text) => {
             this.setState({
                 ...this.state,
