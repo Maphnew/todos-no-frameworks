@@ -4,7 +4,8 @@ import Footer from './Footer.js'
 
 export default function App({ $target }) {
     this.state = {
-        todolist: []
+        todolist: [],
+        filter: 'All' // 'All', 'Active', 'Completed'
     }
 
     this.setState = (nextState) => {
@@ -51,7 +52,16 @@ export default function App({ $target }) {
         $target,
         initialState: this.state,
         onClear: () => {
-            this.setState({todolist: []})
+            this.setState({
+                ...this.state,
+                todolist: this.state.todolist.filter(todo => todo.completed === false)
+            })
+        },
+        onFilter: (filter) => {
+            this.setState({
+                ...this.state,
+                filter: filter
+            })
         }
     })
 }

@@ -1,4 +1,4 @@
-export default function Footer({ $target, initialState, onClear }) {
+export default function Footer({ $target, initialState, onClear, onFilter }) {
     this.$element = document.createElement("footer")
     this.$element.className = "footer"
     this.state = initialState
@@ -56,6 +56,9 @@ export default function Footer({ $target, initialState, onClear }) {
             }else{
                 $a.closest('ul').querySelectorAll('a').forEach(a => a.classList.remove('selected'))
                 $a.classList.add("selected")
+            }
+            if(['All', 'Active', 'Completed'].includes($a.textContent)) {
+                onFilter($a.textContent)
             }
         }
     })

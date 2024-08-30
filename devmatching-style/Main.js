@@ -20,7 +20,23 @@ export default function Main({ $target, initialState, onAdd, onDelete, onCheck }
                 Mark all as complete
             </label>
             <ul class="todo-list">
-                ${this.state.todolist.map((todo, i) => {
+                ${this.state.todolist.filter((todo) => {
+                    switch (this.state.filter) {
+                        case 'All':
+                            return todo
+                            break;
+                        case 'Active':
+                            return todo.completed === false
+                            break;
+                        case 'Completed':
+                            return todo.completed === true
+                            break;
+                    
+                        default:
+                            return todo
+                            break;
+                    }
+                }).map((todo, i) => {
                     return `
                         <li data-id=${i} class="${todo.completed ? 'completed': ''}">
                             <div class="view">
@@ -39,6 +55,9 @@ export default function Main({ $target, initialState, onAdd, onDelete, onCheck }
 
     window.addEventListener('keyup', (e) => {
         if(e.key === 'Enter') {
+            if(document.querySelector('.new-todo').value === '') {
+                return
+            }
             onAdd({
                 text: document.querySelector('.new-todo').value,
                 completed: false
