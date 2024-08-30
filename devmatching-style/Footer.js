@@ -24,7 +24,7 @@ export default function Footer({ $target, initialState, onClear, onFilter }) {
     this.render = () => {
         this.$element.innerHTML = `
             <span class="todo-count">
-                ${this.getTodoCount(this.state.todolist)}
+                ${this.getTodoCount(this.state)}
             </span>
             <ul class="filters">
                 <li>

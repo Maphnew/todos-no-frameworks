@@ -11,7 +11,7 @@ export default function App({ $target }) {
 
     this.setState = (nextState) => {
         this.state = nextState
-        footer.setState(nextState)
+        footer.setState(nextState.todolist)
         main.setState(nextState)
     }
 
@@ -70,7 +70,7 @@ export default function App({ $target }) {
 
     const footer = new Footer({
         $target,
-        initialState: this.state,
+        initialState: this.state.todolist,
         onClear: () => {
             this.setState({
                 ...this.state,
