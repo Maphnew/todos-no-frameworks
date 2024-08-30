@@ -1,4 +1,4 @@
-export default function Main({ $target, initialState, onAdd, onDelete, onCheck }) {
+export default function Main({ $target, initialState, onAdd, onDelete, onCheck, onToggleAll }) {
     this.$element = document.createElement("section")
     this.$element.className = "main"
     this.state = initialState
@@ -15,7 +15,7 @@ export default function Main({ $target, initialState, onAdd, onDelete, onCheck }
 
     this.render = () => {
         this.$element.innerHTML = `
-            <input id="toggle-all" class="toggle-all" type="checkbox">
+            <input id="toggle-all" class="toggle-all" type="checkbox" ${this.state.toggleAll ? 'checked' : ''}>
             <label for="toggle-all">
                 Mark all as complete
             </label>
@@ -64,6 +64,10 @@ export default function Main({ $target, initialState, onAdd, onDelete, onCheck }
         const $checkbox = e.target.closest("input[type=checkbox]")
         if($checkbox && $checkbox.className === 'toggle') {
             onCheck($checkbox.nextElementSibling.textContent)
+        }
+        const $input = e.target.closest("input")
+        if($input && $input.className === 'toggle-all') {
+            onToggleAll()
         }
     })
 }

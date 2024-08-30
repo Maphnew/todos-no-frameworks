@@ -5,6 +5,7 @@ import Footer from './Footer.js'
 export default function App({ $target }) {
     this.state = {
         todolist: [],
+        toggleAll: false,
         filter: 'All' // 'All', 'Active', 'Completed'
     }
 
@@ -21,29 +22,36 @@ export default function App({ $target }) {
     const main = new Main({
         $target, initialState: this.state,
         onAdd: (todo) => {
-            const todolist = [...this.state.todolist, todo]
             this.setState({
                 ...this.state,
-                todolist
+                todolist: [...this.state.todolist, todo]
             })
         },
         onDelete: (text) => {
-            const todolist = this.state.todolist.filter(todo => todo.text !== text)
             this.setState({
                 ...this.state,
-                todolist
+                todolist: this.state.todolist.filter(todo => todo.text !== text)
             })
         },
         onCheck: (text) => {
-            const todolist = this.state.todolist.map(todo => {
-                if(todo.text === text) {
-                    todo.completed = !todo.completed
-                }
-                return todo
-            })
             this.setState({
                 ...this.state,
-                todolist
+                todolist: this.state.todolist.map(todo => {
+                    if(todo.text === text) {
+                        todo.completed = !todo.completed
+                    }
+                    return todo
+                })
+            })
+        },
+        onToggleAll: () => {
+            this.setState({
+                ...this.state,
+                toggleAll: !this.state.toggleAll,
+                todolist: this.state.todolist.map(todo => {
+                    todo.completed = !this.state.toggleAll === true ? true : false
+                    return todo
+                })
             })
         }
     })
