@@ -1,4 +1,4 @@
-export default function Main({ $target, initialState, onAdd, onDelete, onCheck, onToggleAll }) {
+export default function Main({ $target, initialState, onAdd, onDelete, onCheck, onToggleAll, onEdit }) {
     this.$element = document.createElement("section")
     this.$element.className = "main"
     this.state = initialState
@@ -43,6 +43,29 @@ export default function Main({ $target, initialState, onAdd, onDelete, onCheck, 
 
     this.render()
 
+    window.addEventListener('keyup', (e) => {
+        if(e.key === 'Enter' && document.activeElement.classList.contains('edit')) {
+            for(const $editInput of document.querySelectorAll('input.edit')) {
+                const prevContent = $editInput.previousElementSibling.querySelector('label').textContent
+                const nextContent = $editInput.value
+                onEdit(prevContent, nextContent)
+            }
+        }
+    })
+    this.$element.addEventListener('dblclick', (e) => {
+        const $label = e.target.closest("label")
+        if($label) {
+            const $li = e.target.closest("li")
+            $li.classList.add('editing')
+
+            const $div = e.target.closest("div")
+            const $editInput = document.createElement('input')
+            $editInput.className = 'edit'
+            $editInput.value = $label.textContent
+            $div.insertAdjacentElement('afterend', $editInput)
+            $editInput.focus()
+        }
+    })
     this.$element.addEventListener('click', (e) => {
         const $button = e.target.closest("button")
         if($button && $button.className === 'destroy') {

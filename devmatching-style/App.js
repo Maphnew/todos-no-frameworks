@@ -53,6 +53,17 @@ export default function App({ $target }) {
                     return todo
                 })
             })
+        },
+        onEdit: (prev, next) => {
+            this.setState({
+                ...this.state,
+                todolist: this.state.todolist.map(todo => {
+                    if(todo.text === prev) {
+                        todo.text = next
+                    }
+                    return todo
+                })
+            })
         }
     })
 

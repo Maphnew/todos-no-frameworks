@@ -15,14 +15,16 @@ export default function Header({ $target, onAdd }) {
 
     window.addEventListener('keyup', (e) => {
         if(e.key === 'Enter') {
-            if(document.querySelector('.new-todo').value === '') {
-                return
+            if(document.activeElement.classList.contains('new-todo')) {
+                if(document.querySelector('.new-todo').value === '') {
+                    return
+                }
+                onAdd({
+                    text: document.querySelector('.new-todo').value,
+                    completed: false
+                })
+                document.querySelector('.new-todo').value = ''
             }
-            onAdd({
-                text: document.querySelector('.new-todo').value,
-                completed: false
-            })
-            document.querySelector('.new-todo').value = ''
         }
     })
 }
