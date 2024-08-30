@@ -18,6 +18,7 @@ export default function App({ $target }) {
     const header = new Header({
         $target,
         onAdd: (todo) => {
+            if(this.state.todolist.map(todo => todo.text).includes(todo.text)) return
             this.setState({
                 ...this.state,
                 todolist: [...this.state.todolist, todo]
