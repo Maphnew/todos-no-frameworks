@@ -21,21 +21,11 @@ export default function Main({ $target, initialState, onAdd, onDelete, onCheck }
             </label>
             <ul class="todo-list">
                 ${this.state.todolist.filter((todo) => {
-                    switch (this.state.filter) {
-                        case 'All':
-                            return todo
-                            break;
-                        case 'Active':
-                            return todo.completed === false
-                            break;
-                        case 'Completed':
-                            return todo.completed === true
-                            break;
-                    
-                        default:
-                            return todo
-                            break;
-                    }
+                    return this.state.filter === 'Active'
+                            ?  todo.completed === false 
+                            : this.state.filter === 'Completed'
+                            ? todo.completed === true 
+                            : todo
                 }).map((todo, i) => {
                     return `
                         <li data-id=${i} class="${todo.completed ? 'completed': ''}">
