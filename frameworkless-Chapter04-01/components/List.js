@@ -73,7 +73,7 @@ export default class List extends HTMLElement {
     this.list.innerHTML = ''
 
     this.todos
-      .map(this.getTodoElement)
+      .map((todo, index) => this.getTodoElement.call(this, todo, index))
       .forEach(element => {
         this.list.appendChild(element)
       })
