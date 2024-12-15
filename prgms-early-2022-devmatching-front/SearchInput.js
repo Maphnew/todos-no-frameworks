@@ -13,6 +13,8 @@ export default function SearchInput({ $target, initialState, onchange }) {
 
   this.render();
 
+  this.$element.focus()
+
   this.$element.addEventListener("keyup", (e) => {
     const actionIgnoreKeys = ["Enter", "ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"];
     if (!actionIgnoreKeys.includes(e.key)) {
