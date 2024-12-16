@@ -6,7 +6,7 @@ type MainContext = {
     onDelete: (text: string) => void
     onCheck: (text: string) => void
     onToggleAll: () => void
-    onEdit: (prev: Todo, next: Todo) => void
+    onEdit: (prevText: string, nextText: string) => void
 }
 
 export default class Main {
