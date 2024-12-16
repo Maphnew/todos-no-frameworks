@@ -2,7 +2,7 @@ import type {Todo} from './types'
 
 type HeaderContext = {
     $target: HTMLElement
-    onAdd: (todo: Todo) => any
+    onAdd: (todo: Todo) => void
 }
 
 export default class Header {
@@ -10,7 +10,6 @@ export default class Header {
     constructor({ $target, onAdd }: HeaderContext) {
         this.$element = document.createElement('header')
         this.$element.className = 'header'
-
         $target.appendChild(this.$element)
 
         this.render()
@@ -24,7 +23,7 @@ export default class Header {
                     onAdd({
                         text: (document.querySelector('.new-todo')! as HTMLInputElement).value,
                         completed: false
-                    })
+                    });
                     (document.querySelector('.new-todo')! as HTMLInputElement).value = ''
                 }
             }
