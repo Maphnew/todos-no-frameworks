@@ -4,6 +4,48 @@ export default class Main {
         this.$element.className = 'main';
         this.state = initialState;
         $target.appendChild(this.$element);
+        window.addEventListener('keyup', (e) => {
+            if (document.activeElement instanceof HTMLElement) {
+                if (e.key === 'Enter' && document.activeElement.classList.contains('edit')) {
+                    for (const $editInput of document.querySelectorAll('input.edit')) {
+                        const prevContent = $editInput.previousElementSibling?.querySelector('label')?.textContent;
+                        const nextContent = $editInput.value;
+                        onEdit(prevContent, nextContent);
+                    }
+                }
+            }
+        });
+        this.$element.addEventListener('dblclick', (e) => {
+            if (e.target instanceof HTMLElement) {
+                const $label = e.target.closest("label");
+                if ($label) {
+                    const $li = e.target.closest("li");
+                    $li?.classList.add('editing');
+                    const $div = e.target.closest("div");
+                    const $editInput = document.createElement('input');
+                    $editInput.className = 'edit';
+                    $editInput.value = $label.textContent;
+                    $div?.insertAdjacentElement('afterend', $editInput);
+                    $editInput.focus();
+                }
+            }
+        });
+        this.$element.addEventListener('click', (e) => {
+            if (e.target instanceof HTMLElement) {
+                const $button = e.target.closest("button");
+                if ($button && $button.className === 'destroy') {
+                    onDelete($button.previousElementSibling?.textContent);
+                }
+                const $checkbox = e.target.closest("input[type=checkbox]");
+                if ($checkbox && $checkbox.className === 'toggle') {
+                    onCheck($checkbox.nextElementSibling?.textContent);
+                }
+                const $input = e.target.closest("input");
+                if ($input && $input.className === 'toggle-all') {
+                    onToggleAll();
+                }
+            }
+        });
         this.render();
     }
     ;

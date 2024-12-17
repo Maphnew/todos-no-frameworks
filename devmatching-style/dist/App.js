@@ -1,3 +1,4 @@
+import Footer from "./Footer.js";
 import Header from "./Header.js";
 import Main from "./Main.js";
 export default class App {
@@ -59,9 +60,26 @@ export default class App {
                 });
             }
         });
+        this.footer = new Footer({
+            $target,
+            initialState: this.state.todoList,
+            onClear: () => {
+                this.setState({
+                    ...this.state,
+                    todoList: this.state.todoList.filter((todo) => todo.completed === false)
+                });
+            },
+            onFilter: (filter) => {
+                this.setState({
+                    ...this.state,
+                    filter: filter
+                });
+            }
+        });
     }
     setState(nextState) {
         this.state = nextState;
         this.main.setState(nextState);
+        this.footer.setState(nextState.todoList);
     }
 }

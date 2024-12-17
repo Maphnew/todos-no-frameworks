@@ -1,3 +1,4 @@
+import Footer from "./Footer.js";
 import Header from "./Header.js";
 import Main from "./Main.js";
 import { State, Todo } from "./types.js";
@@ -5,6 +6,7 @@ import { State, Todo } from "./types.js";
 export default class App {
     private state: State
     private main: Main
+    private footer: Footer
     constructor($target: HTMLElement) {
         this.state = {
             todoList: [],
@@ -64,9 +66,26 @@ export default class App {
                 })
             }
         })
+        this.footer = new Footer({
+            $target,
+            initialState: this.state.todoList,
+            onClear: () => {
+                this.setState({
+                    ...this.state,
+                    todoList: this.state.todoList.filter((todo: Todo) => todo.completed === false)
+                })
+            },
+            onFilter: (filter: State['filter']) => {
+                this.setState({
+                    ...this.state,
+                    filter: filter
+                })
+            }
+        })
     }
     setState(nextState: State) {
         this.state = nextState
         this.main.setState(nextState)
+        this.footer.setState(nextState.todoList)
     }
 }
