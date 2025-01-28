@@ -4,6 +4,7 @@ import countView from './view/count.js'
 import filtersView from './view/filters.js'
 
 import registry from './registry.js'
+import applyDiff from './applyDiff.js'
 
 registry.add('todos', todosView)
 registry.add('counter', countView)
@@ -14,8 +15,17 @@ const state = {
     currentFilter: 'All', // 'All', 'Active', 'Completed'
 }
 
-window.requestAnimationFrame(() => {
-    const main = document.querySelector('.todoapp')
-    const newMain = registry.renderRoot(main, state)
-    main.replaceWith(newMain)
-})
+const render = () => {
+    window.requestAnimationFrame(() => {
+        const main = document.querySelector('.todoapp')
+        const newMain = registry.renderRoot(main, state)
+        applyDiff(document.body, main, newMain)
+    })
+}
+
+window.setInterval(() => {
+    state.todos = getTodos()
+    render()
+}, 5000)
+
+render()
