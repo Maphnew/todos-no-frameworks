@@ -10,7 +10,7 @@ const createNewTodoNode = () => {
         .cloneNode(true) // deep: true
 }
 
-const getTodoElement = (todo) => {
+const getTodoElement = (todo, index, events) => {
     const {
         text,
         completed,
@@ -30,14 +30,22 @@ const getTodoElement = (todo) => {
             .checked = true
     }
 
+    const handler = e => events.deleteItem(index)
+
+    element
+        .querySelector('button.destroy')
+        .addEventListener('click', handler)
+
     return element
 }
 
-export default (targetElement, {todos}) => {
+export default (targetElement, {todos}, events) => {
     const newTodoList = targetElement.cloneNode(true)
+
     newTodoList.innerHTML = ''
+
     todos
-        .map(getTodoElement)
+        .map((todo, index) => getTodoElement(todo, index, events))
         .forEach(element => {
             newTodoList.appendChild(element)
         });

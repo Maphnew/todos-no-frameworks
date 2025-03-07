@@ -1,4 +1,3 @@
-import getTodos from './getTodos.js'
 import todosView from './view/todos.js'
 import countView from './view/count.js'
 import filtersView from './view/filters.js'
@@ -13,21 +12,31 @@ registry.add('counter', countView)
 registry.add('filters', filtersView)
 
 const state = {
-    todos: getTodos(),
+    todos: [],
     currentFilter: 'All', // 'All', 'Active', 'Completed'
+}
+
+const events = {
+    deleteItem: (index) => {
+        state.todos.splice(index, 1)
+        render()
+    },
+    addItem: text => {
+        state.todos.push({
+            text,
+            completed: false
+        })
+        render()
+    }
 }
 
 const render = () => {
     window.requestAnimationFrame(() => {
         const main = document.querySelector('#root')
-        const newMain = registry.renderRoot(main, state)
+        const newMain = registry.renderRoot(main, state, events)
         applyDiff(document.body, main, newMain)
     })
 }
 
-window.setInterval(() => {
-    state.todos = getTodos()
-    render()
-}, 5000)
 
 render()
