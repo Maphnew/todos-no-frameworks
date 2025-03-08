@@ -30,16 +30,16 @@ const getTodoElement = (todo, index, events) => {
             .checked = true
     }
 
-    const handler = e => events.deleteItem(index)
-
     element
         .querySelector('button.destroy')
-        .addEventListener('click', handler)
+        .dataset
+        .index = index
 
     return element
 }
 
 export default (targetElement, {todos}, events) => {
+    const {deleteItem} = events
     const newTodoList = targetElement.cloneNode(true)
 
     newTodoList.innerHTML = ''
@@ -49,5 +49,12 @@ export default (targetElement, {todos}, events) => {
         .forEach(element => {
             newTodoList.appendChild(element)
         });
+
+    newTodoList.addEventListener('click', e => {
+        if(e.target.matches('button.destroy')) {
+            deleteItem(e.target.dataset.index)
+        }
+    })
+
     return newTodoList
 }
